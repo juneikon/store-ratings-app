@@ -17,7 +17,7 @@ const pool = new Pool({
 
 // 🚀 CORS CONFIGURATION
 app.use(cors({
-  origin: [process.env.FRONTEND_URL, 'http://localhost:3000', 'https://your-app.netlify.app'].filter(Boolean),
+  origin: [process.env.FRONTEND_URL, 'http://localhost:3000', 'https://enchanting-sfogliatella-455d3e.netlify.app'].filter(Boolean),
   credentials: true
 }));
 
@@ -74,6 +74,37 @@ const validatePassword = (password) => {
 };
 
 // Routes
+app.get('/api/debug/stores', async (req, res) => {
+  try {
+    const result = await pool.query('SELECT * FROM stores');
+    res.json({ 
+      success: true, 
+      storeCount: result.rows.length,
+      stores: result.rows
+    });
+  } catch (error) {
+    res.json({ 
+      success: false, 
+      error: error.message
+    });
+  }
+});
+
+app.get('/api/debug/ratings', async (req, res) => {
+  try {
+    const result = await pool.query('SELECT * FROM ratings');
+    res.json({ 
+      success: true, 
+      ratingCount: result.rows.length,
+      ratings: result.rows
+    });
+  } catch (error) {
+    res.json({ 
+      success: false, 
+      error: error.message
+    });
+  }
+});
 
 // Health check
 app.get('/api/health', (req, res) => {
