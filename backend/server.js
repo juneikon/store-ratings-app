@@ -7,15 +7,17 @@ require('dotenv').config();
 const app = express();
 const port = process.env.PORT || 10000;
 
-// 🚀 PRODUCTION DATABASE CONNECTION
+// 🚀 NEON DATABASE CONNECTION
 const pool = new Pool({
   connectionString: process.env.DATABASE_URL,
-  ssl: { rejectUnauthorized: false }
+  ssl: { 
+    rejectUnauthorized: false 
+  }
 });
 
-// 🚀 PRODUCTION CORS
+// 🚀 CORS CONFIGURATION
 app.use(cors({
-  origin: [process.env.FRONTEND_URL, 'https://charming-biscuit-1ef52e.netlify.app'].filter(Boolean),
+  origin: [process.env.FRONTEND_URL, 'http://localhost:3000', 'https://your-app.netlify.app'].filter(Boolean),
   credentials: true
 }));
 
@@ -83,6 +85,7 @@ app.get('/', (req, res) => {
   res.json({ 
     message: 'Store Ratings Backend API', 
     status: 'running',
+    database: 'Neon PostgreSQL',
     endpoints: {
       health: '/api/health',
       login: '/api/login',
@@ -451,4 +454,5 @@ app.get('/api/store-owner/dashboard', auth, requireRole(['store_owner']), async 
 app.listen(port, () => {
   console.log(`🚀 Server running on port ${port}`);
   console.log(`✅ Health check: http://localhost:${port}/api/health`);
+  console.log(`🗄️ Database: Neon PostgreSQL`);
 });
