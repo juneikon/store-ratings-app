@@ -1,5 +1,5 @@
 {
-  "name": "store-ratings-backend",
+  "name": "store-ratings-backends",
   "version": "1.0.0",
   "description": "Backend API for store ratings application",
   "main": "server.js",
